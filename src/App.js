@@ -1,6 +1,7 @@
 import React from "react";
 import TodoForm from "./components/TodoComponents/TodoForm";
 import TodoList from "./components/TodoComponents/TodoList";
+import "./components/TodoComponents/Todo.css";
 
 class App extends React.Component {
   // you will need a place to store your state in this component.
@@ -9,42 +10,50 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      todos: [
-        { task: "Organize Garage", id: Date.now(), completed: true },
-        { task: "Bake Cookies", id: Date.now(), completed: false }
-      ],
-      todo: {
-        task: "",
-        id: Date.now(),
-        completed: false
-      }
+      todos: []
     };
   }
 
-  addTodoHandler = e => {
-    e.preventDefault();
-    this.setState(() => {
-      return {
-        todo: {
-          [e.target.name]: e.target.value
-        }
-      };
+  changeHandler = e => {
+    this.setState({
+      [e.target.name]: e.target.value
     });
+  };
+
+  submitHandler = e => {
+    e.preventDefault();
+
+    let todoShape = {
+      task: this.state.todo,
+      id: Date.now(),
+      completed: false
+    };
+
+    const newTodos = [...this.state.todos, todoShape];
+
+    this.setState({ todos: newTodos });
     console.log(this.state.todos);
   };
 
-  clearCompletedHandler = () => {
-    this.setState(prevState => {
-      const todos = prevState.todos.filter(todo => {
-        return todo.completed !== true;
-      });
+  completeTask = (e, id) => {
+    // map over the todos array and return
+    const todoById = this.state.todos.map(todo => {
+      return todo.id === id ? { ...todo, completed: !todo.completed } : todo;
+    });
 
-      return { todos };
+    this.setState({
+      todos: todoById
     });
   };
 
-  markAsCompleted = e => {
-    console.log(e);
+  clearCompleted = () => {
+    const completed = this.state.todos.filter(item => {
+      return item.completed === true;
+    });
+
+    this.setState({
+      todos: completed
+    });
   };
 
   render() {
@@ -52,15 +61,11 @@ class App extends React.Component {
       <div>
         <h2>Welcome to your Todo App!</h2>
         <TodoForm
-          todos={this.state.todos}
-          addTodoHandler={this.addTodoHandler}
-          clearCompletedHandler={this.clearCompletedHandler}
+          changeHandler={this.changeHandler}
+          submitHandler={this.submitHandler}
+          clearCompleted={this.clearCompleted}
         />
-        <TodoList
-          todos={this.state.todos}
-          todo={this.state.todo}
-          markAsCompleted={this.markAsCompleted}
-        />
+        <TodoList todos={this.state.todos} completeTask={this.completeTask} />
       </div>
     );
   }

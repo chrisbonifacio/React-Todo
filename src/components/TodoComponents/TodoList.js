@@ -4,16 +4,19 @@ import React from "react";
 import Todo from "./Todo";
 
 class TodoList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="todo-list">
         <ul>
-          {this.props.todos.map(task => {
-            return <Todo key={task.id} todo={this.props.todo} />;
+          {this.props.todos.map(todo => {
+            return (
+              <Todo
+                key={todo.id}
+                todo={todo}
+                task={todo.task}
+                completeTask={this.props.completeTask}
+              />
+            );
           })}
         </ul>
       </div>
