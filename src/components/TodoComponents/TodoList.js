@@ -1,6 +1,7 @@
 // your components will all go in this `component` directory.
 // feel free to change this component.js into TodoList.js
 import React from "react";
+import Todo from "./Todo";
 
 class TodoList extends React.Component {
   constructor(props) {
@@ -11,11 +12,13 @@ class TodoList extends React.Component {
     return (
       <div className="todo-list">
         <ul>
-          {this.props.data.map(task => {
-            return <li>{task}</li>;
+          {this.props.todos.map(task => {
+            return <Todo todo={this.props.todo} />;
           })}
         </ul>
       </div>
     );
   }
 }
+
+export default TodoList;

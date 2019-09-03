@@ -11,12 +11,8 @@ class TodoForm extends React.Component {
         <form>
           <label htmlFor="task">
             <input type="text" name="task" placeholder="...todo"></input>
-            <button onClick={addTodo}>Add Todo</button>
-            <button
-              onClick={() => {
-                this.setState({});
-              }}
-            >
+            <button onChange={this.props.addTodoHandler}>Add Todo</button>
+            <button onClick={this.props.clearCompletedHandler}>
               Clear Completed
             </button>
           </label>
