@@ -9,7 +9,10 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      todos: [],
+      todos: [
+        { task: "Organize Garage", id: Date.now(), completed: true },
+        { task: "Bake Cookies", id: Date.now(), completed: false }
+      ],
       todo: {
         task: "",
         id: Date.now(),
@@ -20,7 +23,14 @@ class App extends React.Component {
 
   addTodoHandler = e => {
     e.preventDefault();
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState(() => {
+      return {
+        todo: {
+          [e.target.name]: e.target.value
+        }
+      };
+    });
+    console.log(this.state.todos);
   };
 
   clearCompletedHandler = () => {
@@ -33,6 +43,10 @@ class App extends React.Component {
     });
   };
 
+  markAsCompleted = e => {
+    console.log(e);
+  };
+
   render() {
     return (
       <div>
@@ -42,7 +56,11 @@ class App extends React.Component {
           addTodoHandler={this.addTodoHandler}
           clearCompletedHandler={this.clearCompletedHandler}
         />
-        <TodoList todos={this.state.todos} todo={this.state.todo} />
+        <TodoList
+          todos={this.state.todos}
+          todo={this.state.todo}
+          markAsCompleted={this.markAsCompleted}
+        />
       </div>
     );
   }

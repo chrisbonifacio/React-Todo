@@ -8,7 +8,9 @@ class Todo extends React.Component {
   render() {
     return (
       <div className="todo">
-        <li>{this.props.todo}</li>
+        <li onDoubleClick={this.props.markAsCompleted}>
+          {this.props.todo.task}
+        </li>
       </div>
     );
   }

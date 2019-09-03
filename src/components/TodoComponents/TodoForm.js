@@ -7,7 +7,7 @@ class TodoForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="todo-form">
         <form>
           <label htmlFor="task">
             <input type="text" name="task" placeholder="...todo"></input>
