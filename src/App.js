@@ -7,12 +7,9 @@ class App extends React.Component {
   // you will need a place to store your state in this component.
   // design `App` to be the parent component of your application.
   // this component is going to take care of state, and any change handlers you need to work with your state
-  constructor() {
-    super();
-    this.state = {
-      todos: []
-    };
-  }
+  state = {
+    todos: []
+  };
 
   submitHandler = (e, newTask) => {
     e.preventDefault();
@@ -23,16 +20,14 @@ class App extends React.Component {
       completed: false
     };
 
-    console.log();
-
     const newTodos = [...this.state.todos, todoShape];
 
     this.setState({ todos: newTodos });
-    console.log(this.state.todos);
   };
 
   completeTask = id => {
     // map over the todos array and if todo.id === id, return todo with the opposite completed value, else return todo as is
+    console.log("event fired off");
     const todoById = this.state.todos.map(todo => {
       return todo.id === id ? { ...todo, completed: !todo.completed } : todo;
     });
