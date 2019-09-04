@@ -14,20 +14,16 @@ class App extends React.Component {
     };
   }
 
-  changeHandler = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
-
-  submitHandler = e => {
+  submitHandler = (e, newTask) => {
     e.preventDefault();
 
     let todoShape = {
-      task: this.state.todo,
+      task: newTask,
       id: Date.now(),
       completed: false
     };
+
+    console.log();
 
     const newTodos = [...this.state.todos, todoShape];
 
@@ -35,8 +31,8 @@ class App extends React.Component {
     console.log(this.state.todos);
   };
 
-  completeTask = (e, id) => {
-    // map over the todos array and return
+  completeTask = id => {
+    // map over the todos array and if todo.id === id, return todo with the opposite completed value, else return todo as is
     const todoById = this.state.todos.map(todo => {
       return todo.id === id ? { ...todo, completed: !todo.completed } : todo;
     });
@@ -48,7 +44,7 @@ class App extends React.Component {
 
   clearCompleted = () => {
     const completed = this.state.todos.filter(item => {
-      return item.completed === true;
+      return item.completed === false;
     });
 
     this.setState({
@@ -61,7 +57,6 @@ class App extends React.Component {
       <div>
         <h2>Welcome to your Todo App!</h2>
         <TodoForm
-          changeHandler={this.changeHandler}
           submitHandler={this.submitHandler}
           clearCompleted={this.clearCompleted}
         />
